@@ -26,15 +26,12 @@ We provide a ready-to-use Docker setup in the `docker/` directory that includes 
 
 2. Build your Docker image:
 ```bash
-docker build -t n8n-puppeteer -f docker/Dockerfile docker/
+docker build -t n8n-custom .
 ```
 
 3. Run the container:
 ```bash
-docker run -it \
-  -p 5678:5678 \
-  -v ~/.n8n:/home/node/.n8n \
-  n8n-puppeteer
+docker run -d -p 5678:5678 -v ~/.n8n:/home/node/.n8n --restart=always --name n8n n8n-custom
 ```
 
 ### Manual Installation

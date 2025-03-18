@@ -227,8 +227,8 @@ async function processPageOperation(
 		});
 
 		const headers = await response?.headers();
-		const statusCode = response?.status();
 
+		const statusCode = response?.status() ?? 0;
 		if (!response || statusCode >= 400) {
 			return handleError.call(
 				this,

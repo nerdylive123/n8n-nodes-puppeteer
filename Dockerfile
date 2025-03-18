@@ -1,4 +1,4 @@
-FROM docker.n8n.io/n8nio/n8n
+FROM docker.n8n.io/n8nio/n8n:next
 
 USER root
 
@@ -13,7 +13,10 @@ RUN apk add --no-cache \
     ttf-freefont \
     udev \
     ttf-liberation \
-    font-noto-emoji
+    font-noto-emoji \
+    python3 \
+    make \
+    g++
 
 # Tell Puppeteer to use installed Chrome instead of downloading it
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
@@ -23,7 +26,10 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 COPY . /opt/n8n-custom-nodes/node_modules/n8n-nodes-puppeteer
 RUN cd /opt/n8n-custom-nodes/node_modules/n8n-nodes-puppeteer && \
     npm install && \
+    npm rebuild --build-from-source && \
     chown -R node:node /opt/n8n-custom-nodes
+
+ENV WEBHOOK_URL="https://n8n-p.unsparkai.com"
 
 # Copy our custom entrypoint
 COPY docker/docker-custom-entrypoint.sh /docker-custom-entrypoint.sh

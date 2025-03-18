@@ -36,6 +36,5 @@ else
 fi
 
 print_banner
-
 # Execute the original n8n entrypoint script
 exec /docker-entrypoint.sh "$@"
